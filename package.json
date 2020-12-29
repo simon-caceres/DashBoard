@@ -5,8 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "start": "vue-cli-service serve --open"
+    "postinstall": "yarn build",
+    "start": "node server.js"
   },
   "dependencies": {
     "connect-history-api-fallback": "^1.6.0",
