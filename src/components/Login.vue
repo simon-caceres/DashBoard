@@ -1,17 +1,18 @@
 <template>
   <mdb-container>
 		<mdb-row>
-			<mdb-col sm="6" style="margin: auto; margin-top: 5rem">
+			<mdb-col sm="6" style="margin: auto; margin-top: 2rem">
         <mdb-card>
           <mdb-card-body>
             <form>
-              <p class="h4 text-center py-4">Parque Arauco Comunidad</p>
+              <img src="@/assets/img/Logo_Parque_Arauco.svg" alt="" srcset="" width="40%">
+              <p class="h4 text-center py-4"> Comunidad</p>
               <div class="grey-text">
-                <mdb-input label="Nombre de usuario" icon="user" group type="text" validate error="wrong" success="right" style="margin-top:3rem"/>
+                <mdb-input label="Nombre de usuario" icon="user" group type="text" validate error="wrong" success="right" style="margin-top:0.5rem"/>
                 <mdb-input label="Contraseña" icon="lock" group type="password" validate style="margin-top:3rem"  />
               </div>
               <div class="text-center py-4 mt-3">
-                <mdb-btn color="cyan" type="submit" @click="onClick">Ingresar</mdb-btn>
+                <mdb-btn color="blue darken-3" type="submit" @click="onClick">Ingresar</mdb-btn>
               </div>
             </form>
           </mdb-card-body>

@@ -131,7 +131,7 @@
         <mdb-modal-title tag="h4" bold class="w-100">Cierre de caso</mdb-modal-title>
       </mdb-modal-header>
       <mdb-modal-body class="mx-3 grey-text">
-        <datetime format="MM/DD/YYYY" width="100%" class="mb-5" v-model="formSave.fecha_cierre"></datetime>
+        <datetime format="DD/MM/YYYY" width="100%" class="mb-5" v-model="formSave.fecha_cierre"></datetime>
         <mdb-input label="Medios de verificacion"  type="email" v-model="formSave.medio_verificacion" class="mb-5"/>
         <mdb-textarea icon="pencil-alt" label="Comentarios" v-model="formSave.comentarios" />
       </mdb-modal-body>
