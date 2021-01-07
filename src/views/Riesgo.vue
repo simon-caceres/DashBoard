@@ -1,162 +1,164 @@
 <template>
   <div>
     <Header title="Riesgo" />
-
-    <div style="padding: 20px">
-      <div class="title-head-container indigo z-depth-2">
-        <h3 style="text-align: left; position: relative;">I. Impactos</h3>
+    <section class="container">
+      
+      <div style="padding: 20px" >
+        <div class="title-head-container indigo z-depth-2">
+          <h3 style="text-align: left; position: relative;">I. Impactos</h3>
+        </div>
+          <mdb-collapse style="position:relative; margin-top:2rem" :toggleTag="['button']" :togglers="1" :toggleClass="['btn btn-primary', 'btn-toggle', 'my-btn']" :toggleText="[``]">
+            <mdb-tbl>
+              <mdb-tbl-head color="indigo" textWhite>
+                <tr>
+                  <th style="text-align: justify;">Impacto de la operación del activo</th>
+                  <th>Nivel de impacto</th>
+                  <th>Puntaje</th>
+                </tr>
+              </mdb-tbl-head>
+              <mdb-tbl-body >
+                <tr v-for="(item, index) in dataImp" :key="index">
+                  <td style="text-align: justify;"> {{item.name}} </td>
+                  <td> {{item.level}} </td>
+                  <td> <input class="form-control" style="text-align: center" type="number" v-model="item.pts"> </td>
+                </tr>
+              </mdb-tbl-body>
+              <mdb-tbl-head color="indigo" textWhite> 
+                <tr>
+                  <th style="background: white;"></th>
+                  <th>Total inpacto</th>
+                  <th style="font-weight: bold"> {{getTotal(dataImp)}} </th>
+                </tr>
+              </mdb-tbl-head>
+            </mdb-tbl>
+          </mdb-collapse>
       </div>
-        <mdb-collapse style="position:relative; margin-top:2rem" :toggleTag="['button']" :togglers="1" :toggleClass="['btn btn-primary', 'btn-toggle', 'my-btn']" :toggleText="[``]">
-          <mdb-tbl>
-            <mdb-tbl-head color="indigo" textWhite>
-              <tr>
-                <th style="text-align: justify;">Impacto de la operación del activo</th>
-                <th>Nivel de impacto</th>
-                <th>Puntaje</th>
-              </tr>
-            </mdb-tbl-head>
-            <mdb-tbl-body >
-              <tr v-for="(item, index) in dataImp" :key="index">
-                <td style="text-align: justify;"> {{item.name}} </td>
-                <td> {{item.level}} </td>
-                <td> {{item.pts}} </td>
-              </tr>
-            </mdb-tbl-body>
-            <mdb-tbl-head color="indigo" textWhite> 
-              <tr>
-                <th style="background: white;"></th>
-                <th>Total inpacto</th>
-                <th> {{getTotal(dataImp)}} </th>
-              </tr>
-            </mdb-tbl-head>
-          </mdb-tbl>
-        </mdb-collapse>
-    </div>
 
-    <div style="padding: 20px">
-      <div class="title-head-container green z-depth-2">
-        <h3 style="text-align: left; position: relative;">II. Ponderador de impactos: Tipo de vecinos</h3>
+      <div style="padding: 20px">
+        <div class="title-head-container green z-depth-2">
+          <h3 style="text-align: left; position: relative;">II. Ponderador de impactos: Tipo de vecinos</h3>
+        </div>
+          <mdb-collapse style="position:relative; margin-top:2rem" :toggleTag="['button']" :togglers="1" :toggleClass="['btn btn-primary', 'btn-toggle', 'my-btn']" :toggleText="['']">
+            <mdb-tbl>
+              <mdb-tbl-head color="green" textWhite>
+                <tr>
+                  <th style="text-align: justify;">El proyecto o activo tiene vecinos...</th>
+                  <th>Sí / No</th>
+                  <th>Ponderador</th>
+                </tr>
+              </mdb-tbl-head>
+              <mdb-tbl-body >
+                <tr v-for="(item, index) in dataVec" :key="index">
+                  <td style="text-align: justify;"> {{item.name}} </td>
+                  <td> {{item.level}} </td>
+                  <td> <input class="form-control" style="text-align: center" type="number" v-model="item.pts"> </td>
+                </tr>
+              </mdb-tbl-body>
+              <mdb-tbl-head color="green" textWhite> 
+                <tr>
+                  <th style="background: white;"></th>
+                  <th>Total inpacto</th>
+                  <th style="font-weight: bold">{{getTotal(dataVec)}}</th>
+                </tr>
+              </mdb-tbl-head>
+            </mdb-tbl>
+          </mdb-collapse>
       </div>
-        <mdb-collapse style="position:relative; margin-top:2rem" :toggleTag="['button']" :togglers="1" :toggleClass="['btn btn-primary', 'btn-toggle', 'my-btn']" :toggleText="['']">
-          <mdb-tbl>
-            <mdb-tbl-head color="green" textWhite>
-              <tr>
-                <th style="text-align: justify;">El proyecto o activo tiene vecinos...</th>
-                <th>Sí / No</th>
-                <th>Ponderador</th>
-              </tr>
-            </mdb-tbl-head>
-            <mdb-tbl-body >
-              <tr v-for="(item, index) in dataVec" :key="index">
-                <td style="text-align: justify;"> {{item.name}} </td>
-                <td> {{item.level}} </td>
-                <td> {{item.pts}} </td>
-              </tr>
-            </mdb-tbl-body>
-            <mdb-tbl-head color="green" textWhite> 
-              <tr>
-                <th style="background: white;"></th>
-                <th>Total inpacto</th>
-                <th>{{getTotal(dataVec)}}</th>
-              </tr>
-            </mdb-tbl-head>
-          </mdb-tbl>
-        </mdb-collapse>
-    </div>
 
-    <div style="padding: 20px">
-      <div class="title-head-container red z-depth-2">
-        <h3 style="text-align: left; position: relative;">III. Características del Área de Influencia</h3>
+      <div style="padding: 20px">
+        <div class="title-head-container red z-depth-2">
+          <h3 style="text-align: left; position: relative;">III. Características del Área de Influencia</h3>
+        </div>
+          <mdb-collapse style="position:relative; margin-top:2rem" :toggleTag="['button']" :togglers="1" :toggleClass="['btn btn-primary', 'btn-toggle', 'my-btn']" :toggleText="['']">
+            <mdb-tbl>
+              <mdb-tbl-head color="red" textWhite>
+                <tr>
+                  <th style="text-align: justify;">Impactos sinérgicos en la zona</th>
+                  <th>Relevancia</th>
+                  <th>Puntaje</th>
+                </tr>
+              </mdb-tbl-head>
+              <mdb-tbl-body >
+                <tr v-for="(item, index) in dataInf" :key="index">
+                  <td style="text-align: justify;"> {{item.name}} </td>
+                  <td> {{item.level}} </td>
+                  <td> <input class="form-control" style="text-align: center" type="number" v-model="item.pts"> </td>
+                </tr>
+              </mdb-tbl-body>
+              <mdb-tbl-head color="red" textWhite> 
+                <tr>
+                  <th style="background: white;"></th>
+                  <th>Total inpacto</th>
+                  <th style="font-weight: bold">{{getTotal(dataInf)}}</th>
+                </tr>
+              </mdb-tbl-head>
+            </mdb-tbl>
+          </mdb-collapse>
       </div>
-        <mdb-collapse style="position:relative; margin-top:2rem" :toggleTag="['button']" :togglers="1" :toggleClass="['btn btn-primary', 'btn-toggle', 'my-btn']" :toggleText="['']">
-          <mdb-tbl>
-            <mdb-tbl-head color="red" textWhite>
-              <tr>
-                <th style="text-align: justify;">Impactos sinérgicos en la zona</th>
-                <th>Relevancia</th>
-                <th>Puntaje</th>
-              </tr>
-            </mdb-tbl-head>
-            <mdb-tbl-body >
-              <tr v-for="(item, index) in dataInf" :key="index">
-                <td style="text-align: justify;"> {{item.name}} </td>
-                <td> {{item.level}} </td>
-                <td> {{item.pts}} </td>
-              </tr>
-            </mdb-tbl-body>
-            <mdb-tbl-head color="red" textWhite> 
-              <tr>
-                <th style="background: white;"></th>
-                <th>Total inpacto</th>
-                <th>{{getTotal(dataInf)}}</th>
-              </tr>
-            </mdb-tbl-head>
-          </mdb-tbl>
-        </mdb-collapse>
-    </div>
 
-     <div style="padding: 20px">
-      <div class="title-head-container orange z-depth-2">
-        <h3 style="text-align: left; position: relative;">Evaluación de Impactos Comunitarios:</h3>
+      <div style="padding: 20px">
+        <div class="title-head-container z-depth-2" v-bind:class="color"> 
+          <h3 style="text-align: left; position: relative;">Evaluación de Impactos Comunitarios:</h3>
+        </div>
+          <mdb-collapse style="position:relative; margin-top:2rem" :toggleTag="['button']" :togglers="1" :toggleClass="['btn btn-primary', 'btn-toggle', 'my-btn']" :toggleText="['']">
+            <mdb-tbl style="padding: 0.5rem 2rem 0.5rem 2rem">
+              <mdb-tbl-head :color="color" textWhite>
+                <tr>
+                  <th>TI</th>
+                  <th>P</th>
+                  <th>AI</th>
+                  <th>Total</th>
+                  <th>Riesgo</th>
+                </tr>
+              </mdb-tbl-head>
+              <mdb-tbl-body >
+                <tr>
+                  <td class="text-bold ">{{getTotal(dataImp)}}</td>
+                  <td class="text-bold ">{{getTotal(dataVec)}}</td>
+                  <td class="text-bold ">{{getTotal(dataInf)}}</td>
+                  <td  class="text-bold ">{{getTotal(dataImp) + getTotal(dataVec) + getTotal(dataInf) }}</td>
+                  <td class="text-bold ">{{ getStringResult() }}</td>
+                </tr>
+              </mdb-tbl-body>
+              <mdb-tbl-body >
+                <tr>
+                  <td colspan="3" style="background-color: green; color: white">Impacto Bajo</td>
+                  <td  class="text-bold">0 - 15</td>
+                  <td></td>
+                </tr>
+              </mdb-tbl-body>
+              <mdb-tbl-body >
+                <tr>
+                  <td colspan="3" style="background-color: orange; color: white">Impacto Medio</td>
+                  <td class="text-bold ">16 - 25</td>
+                  <td></td>
+                </tr>
+              </mdb-tbl-body>
+              <mdb-tbl-body style="padding-top: 1rem !important">
+                <tr >
+                  <td colspan="3" style="background-color: red; color: white;">Impacto Alto</td>
+                  <td class="text-bold ">26 - 97</td>
+                  <td></td>
+                </tr>
+              </mdb-tbl-body>
+              <mdb-tbl-body >
+                <tr>
+                  <td colspan="3">Puntaje minimo</td>
+                  <td class="text-bold ">0</td>
+                  <td></td>
+                </tr>
+              </mdb-tbl-body>
+              <mdb-tbl-body >
+                <tr>
+                  <td colspan="3">Puntaje maximo</td>
+                  <td class="text-bold ">97</td>
+                  <td></td>
+                </tr>
+              </mdb-tbl-body>
+            </mdb-tbl>
+          </mdb-collapse>
       </div>
-        <mdb-collapse style="position:relative; margin-top:2rem" :toggleTag="['button']" :togglers="1" :toggleClass="['btn btn-primary', 'btn-toggle', 'my-btn']" :toggleText="['']">
-          <mdb-tbl style="padding: 0.5rem 2rem 0.5rem 2rem">
-            <mdb-tbl-head color="orange" textWhite>
-              <tr>
-                <th>TI</th>
-                <th>P</th>
-                <th>AI</th>
-                <th>Total</th>
-                <th>Riesgo</th>
-              </tr>
-            </mdb-tbl-head>
-            <mdb-tbl-body >
-              <tr>
-                <td>{{getTotal(dataImp)}}</td>
-                <td>{{getTotal(dataVec)}}</td>
-                <td>{{getTotal(dataInf)}}</td>
-                <td>{{getTotal(dataImp) + getTotal(dataVec) + getTotal(dataInf) }}</td>
-                <td>{{ getStringResult() }}</td>
-              </tr>
-            </mdb-tbl-body>
-            <mdb-tbl-body >
-              <tr>
-                <td colspan="3" style="background-color: green; color: white">Impacto Bajo</td>
-                <td>0 - 15</td>
-                <td></td>
-              </tr>
-            </mdb-tbl-body>
-            <mdb-tbl-body >
-              <tr>
-                <td colspan="3" style="background-color: orange; color: white">Impacto Medio</td>
-                <td>16 - 25</td>
-                <td></td>
-              </tr>
-            </mdb-tbl-body>
-            <mdb-tbl-body style="padding-top: 1rem !important">
-              <tr >
-                <td colspan="3" style="background-color: red; color: white;">Impacto Alto</td>
-                <td>26 - 97</td>
-                <td></td>
-              </tr>
-            </mdb-tbl-body>
-            <mdb-tbl-body >
-              <tr>
-                <td colspan="3">Puntaje minimo</td>
-                <td>0</td>
-                <td></td>
-              </tr>
-            </mdb-tbl-body>
-            <mdb-tbl-body >
-              <tr>
-                <td colspan="3">Puntaje maximo</td>
-                <td>97</td>
-                <td></td>
-              </tr>
-            </mdb-tbl-body>
-          </mdb-tbl>
-        </mdb-collapse>
-    </div>
+    </section>
   </div>
 </template>
 
@@ -169,12 +171,11 @@ export default {
     mdbTbl,
     mdbTblHead,
     mdbTblBody,
-    mdbCollapse,
-    
-    
+    mdbCollapse
   },
   data () {
     return {
+      color: 'orange',
       dataImp: [
         {
           name: 'Aumento de congestión vehicular',
@@ -257,19 +258,22 @@ export default {
     getTotal (array) {
       let acumulador = 0
       array.forEach(element => {
-        acumulador = acumulador + element.pts
+        acumulador = acumulador + (element.pts === '' ?  0 : parseInt(element.pts))
       })
       return acumulador
     },
     getStringResult () {
       let total = this.getTotal(this.dataImp) + this.getTotal(this.dataVec) + this.getTotal(this.dataInf)
       if( total >= 0 && total <= 15 ) {
+        this.color = 'green'
         return 'Bajo'
       }
       if( total >= 16 && total <= 25 ) {
+        this.color = 'orange'
         return 'Medio'
       }
       if( total >= 26 && total <= 97 ) {
+        this.color = 'red'
         return 'Alto'
       }
       
@@ -288,6 +292,10 @@ export default {
 </script>
 
 <style>
+.text-bold {
+  font-weight: bold; 
+  color: #91918e
+}
 .title-head-container {
   color:white;
   height: 3rem;

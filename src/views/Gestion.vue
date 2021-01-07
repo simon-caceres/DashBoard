@@ -1,40 +1,35 @@
 <template>
   <div>
     <Header title="Gestion" />
-    <div class="data_table_container card card-cascade " style="padding: 20px;">
+    <div class="data_table_container  card-cascade " style="padding: 20px;">
       <!--Card image-->
-      <div class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center z-depth-2" style="margin-top: -2rem; border-radius: 25px 25px 0px 0px; padding-left: 2rem; padding-right: 2rem;">
+      <div class="view view-cascade gradient-card-header white-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center z-depth-2" style="margin-top: -2rem; border-radius: 25px 25px 0px 0px; padding-left: 2rem; padding-right: 2rem;">
           <div>
-              <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
-                  <i class="fas fa-th-large mt-0"></i>
-              </button>
-              <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
-                  <i class="fas fa-columns mt-0"></i>
-              </button>
-              <a 
-                class="btn btn-floating btn-sm px-2 mt-1" 
-                type="button" 
-                style="border-radius: 100%" 
-                @click="showModal"
-              >
-                <mdb-icon 
-                  icon="plus-circle" 
-                  size="3x" 
-                  class="white-text mt-0"
-                />
-              </a>
+            <button type="button" class="btn btn-outline-blue btn-rounded btn-sm px-2">
+              <i class="fas fa-th-large mt-0"></i>
+            </button>
+            <button type="button" class="btn btn-outline-blue btn-rounded btn-sm px-2">
+              <i class="fas fa-columns mt-0"></i>
+            </button>
           </div>
-          <p class="white-text mx-3">Gestión Comunitaria</p>
-          <div>
-              <button type="button" @click="editOneModal" class="btn btn-outline-white btn-rounded btn-sm px-2">
-                  <i class="fas fa-pencil-alt mt-0"></i>
-              </button>
-              <button type="button" @click="closeOne" class="btn btn-outline-white btn-rounded btn-sm px-2">
-                  <i class="fas fa-times mt-0"></i>
-              </button>
-              <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
-                  <i class="fas fa-info-circle mt-0"></i>
-              </button>
+          <h4 class="">Gestión Comunitaria</h4>
+          <div style="display: flex">
+            <a href="">
+            </a>
+            <p class="px-3 mt-3">Agregar Caso</p>
+             <a
+              class="" 
+              type="button" 
+              style="border-radius: 100%" 
+              @click="showModal"
+             >
+               <mdb-icon 
+                icon="plus-circle" 
+                size="3x" 
+                class="indigo-text mt-0  btn-floating  "
+               />
+             </a>
+              
           </div>
       </div>
       <!--/Card image-->
@@ -58,58 +53,91 @@
         @selectRow="onSelect"
         selectable @selected="selected = $event"
       />
+      <div style="text-align: right">
+         <button type="button" @click="editOneModal" class="btn btn-outline-blue btn-rounded btn-sm px-2">
+          <i class="fas fa-pencil-alt mt-0"></i>
+        </button>
+        <button type="button" @click="closeOne" class="btn btn-outline-blue btn-rounded btn-sm px-2">
+          <i class="fas fa-times mt-0"></i>
+        </button>
+      </div>
+     
     </div>
+    
     <mdb-container>
-       <mdb-modal position="center" size="fluid" :show="login" @close="login = false">
+       <mdb-modal position="center" size="lg" :show="login" @close="login = false">
+
         <mdb-modal-header class="text-center">
            <mdb-modal-title tag="h4" bold class="w-100" v-if="editOneBool">Editar</mdb-modal-title>
           <mdb-modal-title tag="h4" bold class="w-100" v-else >Agregar Nuevo</mdb-modal-title>
         </mdb-modal-header>
+
         <mdb-modal-body class="mx-3 grey-text">
           <mdb-row>
             <mdb-col>
-              <mdb-input label="Pais"  type="name" class="mb-2" v-model="formSave.pais" />
+              <select class="browser-default custom-select mt-4 mb-4" v-model="formSave.pais">
+                <option selected>Pais</option>
+                <option value="Chile">Chile</option>
+                <option value="Colombia">Colombia</option>
+                <option value="Peru">Peru</option>
+              </select>
             </mdb-col>
             <mdb-col>
-              <mdb-input label="Activo"  type="name" v-model="formSave.activo" />
-            </mdb-col>
-            <mdb-col>
-              <mdb-input label="Nombre Caso"  type="name" class="mb-2" v-model="formSave.nombre_caso" />
+              <select class="browser-default custom-select mt-4 mb-4" v-model="formSave.activo">
+                <option selected>Activo</option>
+                <option value="Chile">Arauco Kenedy</option>
+                <option value="Colombia">Arauco Estacion</option>
+                <option value="Peru">Arauco Colombia</option>
+              </select>
             </mdb-col>
           </mdb-row>
-          <mdb-row>
+          
+          <mdb-row class="mb-4">
             <mdb-col>
-              <mdb-input label="Actor Principal"  type="name" v-model="formSave.actor_principal" />
+              <mdb-input label="Nombre Caso"  type="text" class="mb-4" v-model="formSave.nombre_caso" />
             </mdb-col>
             <mdb-col>
-              <mdb-input label="Otros Actores"  type="name" class="mb-2" v-model="formSave.otros_actores"/>
-            </mdb-col>
-            <mdb-col>
-              <mdb-input label="Categoria"  type="name" v-model="formSave.categoria" />
+              <mdb-input label="Actor Principal"  type="text" class="mb-4"  v-model="formSave.actor_principal" />
             </mdb-col>
           </mdb-row>
-          <mdb-row>
+
+          <mdb-row class="mb-4">
             <mdb-col>
-              <mdb-input label="Sub Categoria"  type="name" class="mb-2" v-model="formSave.sub_categoria" />
+              <mdb-input label="Otros Actores"  type="text" class="mb-2" v-model="formSave.otros_actores"/>
             </mdb-col>
             <mdb-col>
-              <mdb-input label="Via Recepcion de caso"  type="name" v-model="formSave.recepcion_caso"/>
-            </mdb-col>
-            <mdb-col>
-              <mdb-input label="Datos de Contacto"  type="name" class="mb-2" v-model="formSave.contacto" />
+              <mdb-input label="Categoria"  type="text" v-model="formSave.categoria" />
             </mdb-col>
           </mdb-row>
-          <mdb-row>
+
+          <mdb-row class="mb-4">
             <mdb-col>
-               <datetime format="DD/MM/YYYY" id="datePicker"  width="100%" style="height: 100%" v-model="formSave.fecha_inicio"></datetime>
+              <mdb-input label="Sub Categoria"  type="text" class="mb-2" v-model="formSave.sub_categoria" />
             </mdb-col>
             <mdb-col>
-              <mdb-input label="Medidas Parque Arauco"  type="name" v-model="formSave.medidas_pq_arauco" />
-            </mdb-col>
-            <mdb-col>
-              <mdb-input label="Medidas Otros Actores"  type="name" v-model="formSave.medidas_otros_actores" />
+              <mdb-input label="Via Recepcion de caso"  type="text" v-model="formSave.recepcion_caso"/>
             </mdb-col>
           </mdb-row>
+
+          <mdb-row class="mb-4">
+            <mdb-col>
+              <mdb-input label="Datos de Contacto"  type="text" class="mb-2" v-model="formSave.contacto" />
+            </mdb-col>
+            <mdb-col>
+               <datetime format="DD/MM/YYYY" id="datePicker" type="text"  width="100%" style="height: 100%" v-model="formSave.fecha_inicio"></datetime>
+            </mdb-col>
+          </mdb-row>
+          
+          <mdb-row class="mb-4">
+            <mdb-col>
+              <mdb-input label="Medidas Parque Arauco" group type="text" v-model="formSave.medidas_pq_arauco" />
+            </mdb-col>
+            <mdb-col>
+              <mdb-input label="Medidas Otros Actores" group type="text" v-model="formSave.medidas_otros_actores" />
+            </mdb-col>
+          </mdb-row>
+           
+          
           <mdb-row>
             <mdb-col>
                <mdb-textarea  label="Descripcion" v-model="formSave.desc" />
@@ -118,6 +146,7 @@
                <mdb-textarea  label="Pendientes"  type="name" v-model="formSave.pendientes" />
             </mdb-col>
           </mdb-row>
+
         </mdb-modal-body>
         <mdb-modal-footer center>
           <mdb-btn @click.native="editOne" v-if="editOneBool">Editar</mdb-btn>
@@ -189,8 +218,8 @@ export default {
       director: '',
       formSave: {
         id: '',
-        pais: '',
-        activo: '',
+        pais: 'Pais',
+        activo: 'Activo',
         nombre_caso: '',
         actor_principal: '',
         otros_actores: '',
