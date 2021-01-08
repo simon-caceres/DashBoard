@@ -1,12 +1,22 @@
 <template>
   <div>
     <Header title="Actor" />
-    <div class="internal-container"> 
-      <mdb-row>
+    <div class="internal-container container"> 
         <mdb-col col="sm" class="card">
           <mdb-row>
             <mdb-col >
-              <h5 style="margin-top: 0.2em">Autoridades locales</h5>
+              <h5 class="mt-2 ml-4">Mapa de Actores</h5>
+            </mdb-col>
+            <mdb-col style="display: flex">
+              <p class="mt-2 mr-2">filtrar por:</p>
+              <select class="browser-default custom-select mb-4" style="width: 70%" v-model="filtrar">
+                <option selected value="nombre">Nombre</option>
+                <option value="cargo">Cargo</option>
+                <option value="contacto">Contacto</option>
+                <option value="email">Email</option>
+                <option value="tipo_autoridad">Tipo de Autoridad</option>
+                <option value="institucion">Institucion</option>
+              </select>
             </mdb-col>
             <mdb-col class="my-form-inline" >
               <div class="input-group " >
@@ -23,256 +33,27 @@
             <mdb-tbl-head color="indigo" textWhite >
               <tr>
                 <th>Nombre</th>
-                <th>Cargo - Datos de contacto</th>
+                <th>Cargo</th>
+                <th>Contacto</th>
+                <th>Email</th>
+                <th>Tipo de autoridad</th>
+                <th>Institucion</th>
                 <th><a @click="saveNewTask(dataAuthority)" ><mdb-icon icon="plus" /></a></th>
               </tr>
             </mdb-tbl-head>
             <mdb-tbl-body id="myTable">
               <tr v-for="(item, index) in dataAuthority" :key="index">
-                <th>{{item.name}}</th>
-                <td>{{item.cargo}}</td>
+                <th class="nombre">{{item.name}}</th>
+                <td class="cargo">{{item.cargo}}</td>
+                <td class="contacto">{{item.contact}} </td>
+                <td class="email">{{item.email}}</td>
+                <td class="tipo_autoridad">{{item.tipo_autoridad}}</td>
+                <td class="institucion">{{item.institucion}}</td>
               </tr>
             </mdb-tbl-body>
           </mdb-tbl>
         </mdb-col>
-
-        <mdb-col col="sm" class="card">
-          <mdb-row>
-            <mdb-col >
-              <h5 style="margin-top: 0.2em">Seguridad y emergencia</h5>
-            </mdb-col>
-            <mdb-col class="my-form-inline" >
-              <div class="input-group ">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" style="border-radius: 25px 0px 0px 25px" id="basic-text1">
-                    <mdbIcon icon="search"/>
-                  </span>
-                </div>
-                <input class="form-control my-0 py-1" type="text" placeholder="Buscar" aria-label="Search" v-model="searchSeg">
-              </div>
-            </mdb-col>
-          </mdb-row>
-          <mdb-tbl >
-            <mdb-tbl-head color="indigo" textWhite>
-              <tr>
-                <th>Nombre</th>
-                <th>Cargo - Datos de contacto</th>
-                <th><a @click="saveNewTask(dataSeg)" ><mdb-icon icon="plus" /></a></th>
-              </tr>
-            </mdb-tbl-head>
-            <mdb-tbl-body id="myTable2">
-              <tr v-for="(item, index) in dataSeg" :key="index">
-                <th>{{item.name}}</th>
-                <td>{{item.cargo}}</td>
-              </tr>
-            </mdb-tbl-body>
-          </mdb-tbl>
-        </mdb-col>
-      </mdb-row>
-
-      <mdb-row class="internal-row">
-        <mdb-col col="sm" class="card">
-          <mdb-row>
-            <mdb-col >
-              <h5 style="margin-top: 0.2em">Organizaciones públicas / privadas</h5>
-            </mdb-col>
-            <mdb-col class="my-form-inline" >
-              <div class="input-group ">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" style="border-radius: 25px 0px 0px 25px" id="basic-text1">
-                    <mdbIcon icon="search"/>
-                  </span>
-                </div>
-                <input class="form-control my-0 py-1" type="text" placeholder="Buscar" aria-label="Search" v-model="searchOrgPub">
-              </div>
-            </mdb-col>
-          </mdb-row>
-          <mdb-tbl >
-            <mdb-tbl-head color="green" textWhite>
-              <tr>
-                <th>Nombre</th>
-                <th>Cargo - Datos de contacto</th>
-                <th><a @click="saveNewTask(dataOrgPub)" ><mdb-icon icon="plus" /></a></th>
-              </tr>
-            </mdb-tbl-head>
-            <mdb-tbl-body id="myTable3">
-              <tr v-for="(item, index) in dataOrgPub" :key="index">
-                <th>{{item.name}}</th>
-                <td>{{item.cargo}}</td>
-              </tr>
-            </mdb-tbl-body>
-          </mdb-tbl>
-        </mdb-col>
-
-        <mdb-col col="sm" class="card">
-          <mdb-row>
-            <mdb-col >
-              <h5 style="margin-top: 0.2em">Fundaciones u ONGs</h5>
-            </mdb-col>
-            <mdb-col class="my-form-inline" >
-              <div class="input-group ">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" style="border-radius: 25px 0px 0px 25px" id="basic-text1">
-                    <mdbIcon icon="search"/>
-                  </span>
-                </div>
-                <input class="form-control my-0 py-1" type="text" placeholder="Buscar" aria-label="Search" v-model="searchFundOng">
-              </div>
-            </mdb-col>
-          </mdb-row>
-          <mdb-tbl >
-            <mdb-tbl-head color="green" textWhite>
-              <tr>
-                <th>Nombre</th>
-                <th>Cargo - Datos de contacto</th>
-                <th><a @click="saveNewTask(dataFundOng)" ><mdb-icon icon="plus" /></a></th>
-              </tr>
-            </mdb-tbl-head>
-            <mdb-tbl-body id="myTable4">
-              <tr v-for="(item, index) in dataFundOng" :key="index">
-                <th>{{item.name}}</th>
-                <td>{{item.cargo}}</td>
-              </tr>
-            </mdb-tbl-body>
-          </mdb-tbl>
-        </mdb-col>
-      </mdb-row>
-
-      <mdb-row class="internal-row">
-        <mdb-col col="sm" class="card">
-          <mdb-row>
-            <mdb-col >
-              <h5 style="margin-top: 0.2em">Organizaciones comunitarias <br> Org. Territoriales</h5>
-            </mdb-col>
-            <mdb-col class="my-form-inline" >
-              <div class="input-group ">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" style="border-radius: 25px 0px 0px 25px" id="basic-text1">
-                    <mdbIcon icon="search"/>
-                  </span>
-                </div>
-                <input class="form-control my-0 py-1" type="text" placeholder="Buscar" aria-label="Search" v-model="searchOrgTerr">
-              </div>
-            </mdb-col>
-          </mdb-row>
-          <mdb-tbl >
-            <mdb-tbl-head color="red" textWhite>
-              <tr>
-                <th>Nombre</th>
-                <th>Cargo - Datos de contacto</th>
-                <th><a @click="saveNewTask(dataOrgTerr)" ><mdb-icon icon="plus" /></a></th>
-              </tr>
-            </mdb-tbl-head>
-            <mdb-tbl-body id="myTable5">
-              <tr v-for="(item, index) in dataOrgTerr" :key="index">
-                <th>{{item.name}}</th>
-                <td>{{item.cargo}}</td>
-              </tr>
-            </mdb-tbl-body>
-          </mdb-tbl>
-        </mdb-col>
-
-        <mdb-col col="sm" class="card">
-          <mdb-row>
-            <mdb-col >
-              <h5 style="margin-top: 0.2em">Organizaciones comunitarias <br> Org. Funcionales</h5>
-            </mdb-col>
-            <mdb-col class="my-form-inline" >
-              <div class="input-group ">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" style="border-radius: 25px 0px 0px 25px" id="basic-text1">
-                    <mdbIcon icon="search"/>
-                  </span>
-                </div>
-                <input class="form-control my-0 py-1" type="text" placeholder="Buscar" aria-label="Search" v-model="searchOrgFunc">
-              </div>
-            </mdb-col>
-          </mdb-row>
-          <mdb-tbl >
-            <mdb-tbl-head color="red" textWhite>
-              <tr>
-                <th>Nombre</th>
-                <th>Cargo - Datos de contacto</th>
-                <th><a @click="saveNewTask(dataOrgFunc)" ><mdb-icon icon="plus" /></a></th>
-              </tr>
-            </mdb-tbl-head>
-            <mdb-tbl-body id="myTable6"> 
-              <tr v-for="(item, index) in dataOrgFunc" :key="index">
-                <th>{{item.name}}</th>
-                <td>{{item.cargo}}</td>
-              </tr>
-            </mdb-tbl-body>
-          </mdb-tbl>
-        </mdb-col>
-      </mdb-row>
-
-      <mdb-row class="internal-row">
-        <mdb-col col="sm" class="card">
-          <mdb-row>
-            <mdb-col >
-              <h5 style="margin-top: 0.2em">Organizaciones comunitarias <br> Org. Ciudadanas</h5>
-            </mdb-col>
-            <mdb-col class="my-form-inline" >
-              <div class="input-group ">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" style="border-radius: 25px 0px 0px 25px" id="basic-text1">
-                    <mdbIcon icon="search"/>
-                  </span>
-                </div>
-                <input class="form-control my-0 py-1" type="text" placeholder="Buscar" aria-label="Search" v-model="searchOrgCiud">
-              </div>
-            </mdb-col>
-          </mdb-row>
-          <mdb-tbl >
-            <mdb-tbl-head color="blue" textWhite>
-              <tr>
-                <th>Nombre</th>
-                <th>Cargo - Datos de contacto</th>
-                <th><a @click="saveNewTask(dataOrgCiud)" ><mdb-icon icon="plus" /></a></th>
-              </tr>
-            </mdb-tbl-head>
-            <mdb-tbl-body id="myTable7">
-              <tr v-for="(item, index) in dataOrgCiud" :key="index">
-                <th>{{item.name}}</th>
-                <td>{{item.cargo}}</td>
-              </tr>
-            </mdb-tbl-body>
-          </mdb-tbl>
-        </mdb-col>
-
-        <mdb-col col="sm" class="card">
-          <mdb-row>
-            <mdb-col >
-              <h5 style="margin-top: 0.2em">Sin Organización</h5>
-            </mdb-col>
-            <mdb-col class="my-form-inline" >
-              <div class="input-group ">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" style="border-radius: 25px 0px 0px 25px" id="basic-text1">
-                    <mdbIcon icon="search"/>
-                  </span>
-                </div>
-                <input class="form-control my-0 py-1" type="text" placeholder="Buscar" aria-label="Search" v-model="searchNoOrg">
-              </div>
-            </mdb-col>
-          </mdb-row>
-          <mdb-tbl >
-            <mdb-tbl-head color="blue" textWhite>
-              <tr>
-                <th>Nombre</th>
-                <th>Cargo - Datos de contacto</th>
-                <th><a @click="saveNewTask(dataNoOrg)" ><mdb-icon icon="plus" /></a></th>
-              </tr>
-            </mdb-tbl-head>
-            <mdb-tbl-body id="myTable8">
-              <tr v-for="(item, index) in dataNoOrg" :key="index">
-                <th>{{item.name}}</th>
-                <td>{{item.cargo}}</td>
-              </tr>
-            </mdb-tbl-body>
-          </mdb-tbl>
-        </mdb-col>
-      </mdb-row>
+      
     </div>
     <mdb-modal frame position="bottom" direction="bottom" :show="modal" @close="modal = false">
         <mdb-modal-body class="text-center row">
@@ -315,6 +96,7 @@ export default {
   },
   data () {
     return {
+      filtrar: 'nombre',
       form:{
         name: '',
         contact: ''
@@ -333,8 +115,22 @@ export default {
       searchNoOrg: '',
       //data Containers
       dataAuthority: [
-        {name: 'Carlos Maya', cargo: 'Alcalde'},
-        {name: 'Sergio Trejo', cargo: 'Subdirector de tránsito Pereira - 3113723743'}
+        {name: 'Carlos Maya', cargo: 'Alcalde', contact: '', email: '', tipo_autoridad: 'local', institucion: 'Alcaldia'},
+        {name: 'Sergio Trejo', cargo: 'Subdirector de tránsito Pereira', contact: '3113723743', email: 'some@email.com', tipo_autoridad: 'Local', institucion: 'Alcaldia'},
+        {name: 'Carlos Maya', cargo: 'Alcalde', contact: '', email: '', tipo_autoridad: 'Salud y Emergencia', institucion: 'Alcaldia'},
+        {name: 'Sergio Trejo', cargo: 'Subdirector de tránsito Pereira', contact: '3113723743', email: 'some@email.com', tipo_autoridad: 'Salud y Emergencia', institucion: 'Alcaldia'},
+        {name: 'Carlos Maya', cargo: 'Alcalde', contact: '', email: '', tipo_autoridad: 'Org. públicas / privadas', institucion: 'Alcaldia'},
+        {name: 'Sergio Trejo', cargo: 'Subdirector de tránsito Pereira', contact: '3113723743', email: 'some@email.com', tipo_autoridad: 'Org. públicas / privadas', institucion: 'Alcaldia'},
+        {name: 'Carlos Maya', cargo: 'Alcalde', contact: '', email: '', tipo_autoridad: 'Org. Territoriales', institucion: 'Alcaldia'},
+        {name: 'Sergio Trejo', cargo: 'Subdirector de tránsito Pereira', contact: '3113723743', email: 'some@email.com', tipo_autoridad: 'Org. Territoriales', institucion: 'Alcaldia'},
+        {name: 'Carlos Maya', cargo: 'Alcalde', contact: '', email: '', tipo_autoridad: 'Fundaciones u ONGs', institucion: 'Alcaldia'},
+        {name: 'Sergio Trejo', cargo: 'Subdirector de tránsito Pereira', contact: '3113723743', email: 'some@email.com', tipo_autoridad: 'Fundaciones u ONGs', institucion: 'Alcaldia'},
+        {name: 'Carlos Maya', cargo: 'Alcalde', contact: '', email: '', tipo_autoridad: 'Org. Funcionales', institucion: 'Alcaldia'},
+        {name: 'Sergio Trejo', cargo: 'Subdirector de tránsito Pereira', contact: '3113723743', email: 'some@email.com', tipo_autoridad: 'Org. Funcionales', institucion: 'Alcaldia'},
+        {name: 'Carlos Maya', cargo: 'Alcalde', contact: '', email: '', tipo_autoridad: 'Org. Ciudadanas', institucion: 'Alcaldia'},
+        {name: 'Sergio Trejo', cargo: 'Subdirector de tránsito Pereira', contact: '3113723743', email: 'some@email.com', tipo_autoridad: 'Org. Ciudadanas', institucion: 'Alcaldia'},
+        {name: 'Carlos Maya', cargo: 'Alcalde', contact: '', email: '', tipo_autoridad: 'Sin Org.', institucion: 'Alcaldia'},
+        {name: 'Sergio Trejo', cargo: 'Subdirector de tránsito Pereira', contact: '3113723743', email: 'some@email.com', tipo_autoridad: 'sin Org.', institucion: 'Alcaldia'},
       ],
       dataSeg: [
         {name: 'Carlos Maya', cargo: 'Alcalde'},
@@ -403,7 +199,7 @@ export default {
       table = document.getElementById("myTable");
       tr = table.getElementsByTagName("tr");
       for (i = 0; i < tr.length; i++) {
-          td = tr[i].getElementsByTagName("td")[0];
+          td = tr[i].getElementsByClassName(`${this.filtrar}`)[0];
           txtValue = td.textContent || td.innerText;
           if (txtValue.toUpperCase().indexOf(filter) > -1) {
               tr[i].style.display = "";

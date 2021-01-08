@@ -3,7 +3,7 @@
     <Header title="Riesgo" />
     <section class="container">
       
-      <div style="padding: 20px" >
+      <div  class="table-container" >
         <div class="title-head-container indigo z-depth-2">
           <h3 style="text-align: left; position: relative;">I. Impactos</h3>
         </div>
@@ -34,13 +34,13 @@
           </mdb-collapse>
       </div>
 
-      <div style="padding: 20px">
-        <div class="title-head-container green z-depth-2">
+      <div class="table-container" >
+        <div class="title-head-container indigo z-depth-2">
           <h3 style="text-align: left; position: relative;">II. Ponderador de impactos: Tipo de vecinos</h3>
         </div>
           <mdb-collapse style="position:relative; margin-top:2rem" :toggleTag="['button']" :togglers="1" :toggleClass="['btn btn-primary', 'btn-toggle', 'my-btn']" :toggleText="['']">
             <mdb-tbl>
-              <mdb-tbl-head color="green" textWhite>
+              <mdb-tbl-head color="indigo" textWhite>
                 <tr>
                   <th style="text-align: justify;">El proyecto o activo tiene vecinos...</th>
                   <th>Sí / No</th>
@@ -54,7 +54,7 @@
                   <td> <input class="form-control" style="text-align: center" type="number" v-model="item.pts"> </td>
                 </tr>
               </mdb-tbl-body>
-              <mdb-tbl-head color="green" textWhite> 
+              <mdb-tbl-head color="indigo" textWhite> 
                 <tr>
                   <th style="background: white;"></th>
                   <th>Total inpacto</th>
@@ -65,13 +65,13 @@
           </mdb-collapse>
       </div>
 
-      <div style="padding: 20px">
-        <div class="title-head-container red z-depth-2">
+      <div class="table-container">
+        <div class="title-head-container indigo z-depth-2">
           <h3 style="text-align: left; position: relative;">III. Características del Área de Influencia</h3>
         </div>
           <mdb-collapse style="position:relative; margin-top:2rem" :toggleTag="['button']" :togglers="1" :toggleClass="['btn btn-primary', 'btn-toggle', 'my-btn']" :toggleText="['']">
             <mdb-tbl>
-              <mdb-tbl-head color="red" textWhite>
+              <mdb-tbl-head color="indigo" textWhite>
                 <tr>
                   <th style="text-align: justify;">Impactos sinérgicos en la zona</th>
                   <th>Relevancia</th>
@@ -85,7 +85,7 @@
                   <td> <input class="form-control" style="text-align: center" type="number" v-model="item.pts"> </td>
                 </tr>
               </mdb-tbl-body>
-              <mdb-tbl-head color="red" textWhite> 
+              <mdb-tbl-head color="indigo" textWhite> 
                 <tr>
                   <th style="background: white;"></th>
                   <th>Total inpacto</th>
@@ -96,7 +96,7 @@
           </mdb-collapse>
       </div>
 
-      <div style="padding: 20px">
+      <div class="table-container">
         <div class="title-head-container z-depth-2" v-bind:class="color"> 
           <h3 style="text-align: left; position: relative;">Evaluación de Impactos Comunitarios:</h3>
         </div>
@@ -311,5 +311,19 @@ export default {
   padding: 0px 14px 0px 14px !important;
   font-weight: bold;
   font-size: 2rem;
+}
+.table-container {
+  padding: 20px;
+}
+
+@media (max-width: 600px) {
+  .table-container {
+    padding: 20px;
+  }
+}
+@media (min-width: 600px) {
+  .table-container {
+    padding: 30px 5vw 20px 5vw;
+  }
 }
 </style>
