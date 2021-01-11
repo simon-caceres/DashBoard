@@ -2,7 +2,27 @@
   <div>
     <Header title="Riesgo" />
     <section class="container">
-      
+      <div class="row mt-4">
+        <div class="col" >
+          <select class="browser-default custom-select mt-2" style="width: 70%; border-radius: 25px" v-model="year">
+            <option selected disabled>Selecciona un año</option>
+            <option value="2020">2020</option>
+            <option value="2019">2019</option>
+            <option value="2018">2018</option>
+          </select>
+        </div>
+        <div class="col">
+          <select class="browser-default custom-select mt-2" style="width: 70%; border-radius: 25px" v-model="activo">
+            <option selected disabled>Selecciona un activo</option>
+            <option value="Parque Arauco">Parque Arauco</option>
+            <option value="Parque Colombia">Parque Colombia</option>
+            <option value="Parque Perú">Parque Perú</option>
+          </select>  
+        </div>
+        <div class="col">
+          <button class="btn btn-primary" style="border-radius: 25px" @click="modalInfo = true">Más información</button>
+        </div>
+      </div>
       <div  class="table-container" >
         <div class="title-head-container indigo z-depth-2">
           <h3 style="text-align: left; position: relative;">I. Impactos</h3>
@@ -158,23 +178,50 @@
             </mdb-tbl>
           </mdb-collapse>
       </div>
+
+      <div>
+        <mdb-modal size="lg" :show="modalInfo" @close="modalInfo = false">
+            <mdb-modal-header>
+              <mdb-modal-title>Matriz de Riesgo Comunitario</mdb-modal-title>
+            </mdb-modal-header>
+            <mdb-modal-body style="text-align: justify">
+              <p>Esta matriz busca asignar a cada proyecto o activo de Parque Arauco un puntaje que permita evaluar la pertinencia de determinada estrategia de relacionamiento comunitario. </p>
+              <p>El puntaje está compuesto por:</p>
+              <tablePage />
+            </mdb-modal-body>
+            <mdb-modal-footer>
+                <mdb-btn color="primary" size="sm" @click.native="modalInfo = false">Close</mdb-btn>
+            </mdb-modal-footer>
+        </mdb-modal>
+      </div>
     </section>
   </div>
 </template>
 
 <script>
+import tablePage from '@/components/Info.vue'
 import Header from '@/components/Header'
-import { mdbTbl, mdbTblHead, mdbTblBody, mdbCollapse,  } from 'mdbvue';
+import { mdbTbl, mdbTblHead, mdbTblBody, mdbCollapse, mdbModal, mdbModalHeader, mdbModalTitle, mdbModalBody, mdbModalFooter, mdbBtn  } from 'mdbvue';
 export default {
   components: {
+    tablePage,
     Header,
     mdbTbl,
     mdbTblHead,
     mdbTblBody,
-    mdbCollapse
+    mdbCollapse,
+    mdbModal,
+    mdbModalHeader,
+    mdbModalTitle,
+    mdbModalBody,
+    mdbModalFooter,
+    mdbBtn
   },
   data () {
     return {
+      modalInfo: false,
+      year: 'Selecciona un año',
+      activo: 'Selecciona un activo',
       color: 'orange',
       dataImp: [
         {
@@ -286,9 +333,14 @@ export default {
         i.classList = 'fas fa-caret-down'
         e.append(i)
       })
-    } 
+  },
+    watch: {
+      activo: function (first) {
+        this.$store.state.title = first
+      }
+    }
 
-}
+  }
 </script>
 
 <style>

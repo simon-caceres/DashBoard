@@ -4,19 +4,26 @@
     <div class="data_table_container  card-cascade " style="padding: 20px;">
       <!--Card image-->
       <div class="view view-cascade gradient-card-header white-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center z-depth-2" style="margin-top: -2rem; border-radius: 25px 25px 0px 0px; padding-left: 2rem; padding-right: 2rem;">
-          <div>
-            <button type="button" class="btn btn-outline-blue btn-rounded btn-sm px-2">
-              <i class="fas fa-th-large mt-0"></i>
-            </button>
-            <button type="button" class="btn btn-outline-blue btn-rounded btn-sm px-2">
-              <i class="fas fa-columns mt-0"></i>
-            </button>
+          <div style="display: flex">
+            <p class="px-3 mt-3">Exportar:</p>
+            <a 
+              type="button"
+              style="border-radius: 100%" 
+              @click="onExport"
+            >
+              <mdb-icon 
+                icon="cloud-download-alt" 
+                size="3x" 
+                class="indigo-text mt-0  btn-floating  "
+              />
+            </a>
+            
           </div>
           <h4 class="">Gestión Comunitaria</h4>
           <div style="display: flex">
             <a href="">
             </a>
-            <p class="px-3 mt-3">Agregar Caso</p>
+            <p class="px-3 mt-3">Agregar Caso:</p>
              <a
               class="" 
               type="button" 
@@ -37,7 +44,6 @@
       <mdb-datatable
         reponsiveSm
         :data="data"
-        refresh
         :tfoot="false"
         bordered
         arrows
@@ -61,6 +67,13 @@
           <i class="fas fa-times mt-0"></i>
         </button>
       </div>
+      <mdb-alert color="warning" v-show="alert" @closeAlert="alert = false" dismiss>
+        ¡Primero seleccione una fila para editar!
+      </mdb-alert>
+
+      <mdb-alert color="warning" v-show="alertClose"  @closeAlert="alertClose = false" dismiss>
+        ¡Debe seleccionar el caso que quiera cerrar!
+      </mdb-alert>
      
     </div>
     
@@ -106,7 +119,21 @@
               <mdb-input label="Otros Actores"  type="text" class="mb-2" v-model="formSave.otros_actores"/>
             </mdb-col>
             <mdb-col>
-              <mdb-input label="Categoria"  type="text" v-model="formSave.categoria" />
+              <select class="browser-default custom-select mt-4 mb-4" v-model="formSave.categoria">
+                <option selected>categoria</option>
+                <option value="Comercio ambulante">Comercio ambulante</option>
+                <option value="Construcción">Construcción</option>
+                <option value="Otros (mantención acequias, cuerpos agua)">Otros (mantención acequias, cuerpos agua)</option>
+                <option value="Olores">Olores</option>
+                <option value="Personas en situación de calle">Personas en situación de calle</option>
+                <option value="Residuos">Residuos</option>
+                <option value="Ruidos">Ruidos</option>
+                <option value="Sanitario">Sanitario</option>
+                <option value="Seguridad">Seguridad</option>
+                <option value="Vial y Accesos">Vial y Accesos</option>
+                <option value="Varios (solicitud por diversos temas)">Varios (solicitud por diversos temas)</option>
+                <option value="Visual">Visual</option>
+              </select>
             </mdb-col>
           </mdb-row>
 
@@ -161,7 +188,7 @@
       </mdb-modal-header>
       <mdb-modal-body class="mx-3 grey-text">
         <datetime format="DD/MM/YYYY" width="100%" class="mb-5" v-model="formSave.fecha_cierre"></datetime>
-        <mdb-input label="Medios de verificacion"  type="email" v-model="formSave.medio_verificacion" class="mb-5"/>
+        <mdb-input  type="file" v-model="formSave.medio_verificacion" class="mb-5"/>
         <mdb-textarea icon="pencil-alt" label="Comentarios" v-model="formSave.comentarios" />
       </mdb-modal-body>
       <mdb-modal-footer center>
@@ -186,11 +213,14 @@ const toLower = text => {
 
     return items
   }
+
+import exportFromJSON from 'export-from-json'
 import datetime from 'vuejs-datetimepicker';
 import Header from '@/components/Header'
-import { mdbDatatable, mdbIcon, mdbModal, mdbModalHeader, mdbModalBody, mdbModalFooter, mdbInput, mdbModalTitle, mdbBtn, mdbTextarea, mdbContainer, mdbCol, mdbRow,  } from 'mdbvue';
+import { mdbDatatable, mdbIcon, mdbModal, mdbModalHeader, mdbModalBody, mdbModalFooter, mdbInput, mdbModalTitle, mdbBtn, mdbTextarea, mdbContainer, mdbCol, mdbRow, mdbAlert  } from 'mdbvue';
 export default {
   components: {
+    mdbAlert,
     datetime,
     mdbCol,
     mdbRow,
@@ -208,6 +238,8 @@ export default {
     mdbBtn
   },
   data: () => ({
+      alert: false,
+      alertClose: false,
       closeCase: false,
       checkbox: true,
       idForEdit: null,
@@ -223,7 +255,7 @@ export default {
         nombre_caso: '',
         actor_principal: '',
         otros_actores: '',
-        categoria: '',
+        categoria: 'categoria',
         sub_categoria: '',
         recepcion_caso: '',
         contacto: '',
@@ -345,6 +377,19 @@ export default {
       },
     }),
     methods: {
+      onExport () {
+        if (this.data.rows.length > 0 ) {
+          const data = this.data.rows
+          const date = new Date()
+          const fileName = 'gestion_' + date
+          const exportType = 'xls'
+      
+          exportFromJSON({ data, fileName, exportType })
+        } else {
+          alert('no hay informacion para exportar')
+        }
+        
+      },
       showModal () {
         this.login = true
         if(this.login === true) {
@@ -396,7 +441,7 @@ export default {
         return `${count} user${plural} selected`
       },
       saveOne () {
-        this.formSave.status = "Procesando"
+        this.formSave.status = "Abierto"
         this.formSave.id = this.data.rows.length + 1
         let objectForPush = this.formSave
         this.data.rows.push(objectForPush)
@@ -424,6 +469,8 @@ export default {
         if (this.idForEdit !== null) {
           this.login = true
           this.editOneBool = true
+        } else {
+          this.alert = true
         }
       },
       editOne () {
@@ -457,6 +504,8 @@ export default {
         if (this.idForEdit !== null) {
           this.closeCase = true
           this.editOneBool = true
+        }  else {
+          this.alertClose = true
         }
       },
       sendOne () {

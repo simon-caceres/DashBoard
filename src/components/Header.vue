@@ -7,6 +7,7 @@
       </a>
       
     </mdb-navbar-brand>
+    <h2 style="color: white;"> {{$store.state.title}} </h2>
     <mdb-navbar-toggler>
       <mdb-navbar-nav right>
         <mdb-dropdown tag="li" class="nav-item" start>
@@ -17,7 +18,7 @@
           <mdb-dropdown-menu color="primary" style="width: 100%">
             <mdb-dropdown-item>Action</mdb-dropdown-item>
             <mdb-dropdown-item>Tareas</mdb-dropdown-item>
-            <mdb-dropdown-item>Cerrar Sesion</mdb-dropdown-item>
+            <mdb-dropdown-item > <router-link to ="/">Cerrar sesion</router-link> </mdb-dropdown-item>
           </mdb-dropdown-menu>
         </mdb-dropdown>
       </mdb-navbar-nav>
@@ -39,9 +40,6 @@
         </div>
  
         <ul class="list-unstyled menu-elements">
-            <li class="active">
-                <router-link class="scroll-link" to="/home"><i class="fas fa-home"></i> Home</router-link>
-            </li>
             <li>
                 <router-link class="scroll-link" to="/gestion"><i class="fas fa-cog"></i> Gestion</router-link>
             </li>
