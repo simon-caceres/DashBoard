@@ -15,7 +15,7 @@
                 <option value="cargo">Cargo</option>
                 <option value="contacto">Contacto</option>
                 <option value="email">Email</option>
-                <option value="tipo_autoridad">Tipo de Autoridad</option>
+                <option value="tipo_autoridad">Tipo de organización</option>
                 <option value="institucion">Institucion</option>
               </select>
             </mdb-col>
@@ -38,7 +38,7 @@
                 <th>Cargo</th>
                 <th>Contacto</th>
                 <th>Email</th>
-                <th style="font-weight: bold">Tipo de autoridad</th>
+                <th style="font-weight: bold">Tipo de organización</th>
                 <th>Institucion</th>
                 <th><a @click="saveNewTask(dataAuthority)" ><mdb-icon icon="plus" /></a></th>
               </tr>
@@ -82,8 +82,8 @@
             </mdb-input>
 
             <select class="browser-default custom-select mt-3 mb-3" v-model="form.tipo_autoridad">
-              <option selected disabled>Tipo de Autoridad</option>
-              <option value="local">Local</option>
+              <option selected disabled>Tipo de organización</option>
+              <option value="Autoridad local">Autoridad local</option>
               <option value="Salud y Emergencia">Salud y Emergencia</option>
               <option value="Org. Publicas / privadas">Org. Publicas / privadas</option>
               <option value="Org. Territoriales">Org. Territoriales</option>
@@ -141,7 +141,7 @@ export default {
         contact: '',
         cargo: '',
         email: '',
-        tipo_autoridad: 'Tipo de Autoridad',
+        tipo_autoridad: 'Tipo de organización',
         institucion: ''
       },
       arrayContain: null,
@@ -158,8 +158,8 @@ export default {
       searchNoOrg: '',
       //data Containers
       dataAuthority: [
-        {id: 1, name: 'Carlos Maya', cargo: 'Alcalde', contact: '', email: '', tipo_autoridad: 'local', institucion: 'Alcaldia'},
-        {id: 2, name: 'Sergio Trejo', cargo: 'Subdirector de tránsito Pereira', contact: '+56 987654321', email: 'some@email.com', tipo_autoridad: 'local', institucion: 'Alcaldia'},
+        {id: 1, name: 'Carlos Maya', cargo: 'Alcalde', contact: '', email: '', tipo_autoridad: 'Autoridad local', institucion: 'Alcaldia'},
+        {id: 2, name: 'Sergio Trejo', cargo: 'Subdirector de tránsito Pereira', contact: '+56 987654321', email: 'some@email.com', tipo_autoridad: 'Autoridad local', institucion: 'Alcaldia'},
         {id: 3, name: 'Carlos Maya', cargo: 'Alcalde', contact: '', email: '', tipo_autoridad: 'Salud y Emergencia', institucion: 'Alcaldia'},
         {id: 4, name: 'Sergio Trejo', cargo: 'Subdirector de tránsito Pereira', contact: '+56 987654321', email: 'some@email.com', tipo_autoridad: 'Salud y Emergencia', institucion: 'Alcaldia'},
         {id: 5, name: 'Carlos Maya', cargo: 'Alcalde', contact: '', email: '', tipo_autoridad: 'Org. públicas / privadas', institucion: 'Alcaldia'},

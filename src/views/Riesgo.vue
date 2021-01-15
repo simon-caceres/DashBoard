@@ -39,7 +39,14 @@
               <mdb-tbl-body >
                 <tr v-for="(item, index) in dataImp" :key="index">
                   <td style="text-align: justify;"> {{item.name}} </td>
-                  <td> {{item.level}} </td>
+                  <td> 
+                    <select class="custom-select custom-select-sm" v-model="item.level">
+                      <option selected> {{item.level}} </option>
+                      <option value="Alto">Alto</option>
+                      <option value="Medio">Medio</option>
+                      <option value="Bajo / Nulo">Bajo / Nulo</option>
+                    </select>
+                  </td>
                   <td> <input class="form-control" style="text-align: center" type="number" v-model="item.pts"> </td>
                 </tr>
               </mdb-tbl-body>
@@ -70,7 +77,13 @@
               <mdb-tbl-body >
                 <tr v-for="(item, index) in dataVec" :key="index">
                   <td style="text-align: justify;"> {{item.name}} </td>
-                  <td> {{item.level}} </td>
+                  <td> 
+                    <select class="custom-select custom-select-sm" v-model="item.level">
+                      <option selected> {{item.level}} </option>
+                      <option value="Si">Si</option>
+                      <option value="No">No</option>
+                    </select>
+                  </td>
                   <td> <input class="form-control" style="text-align: center" type="number" v-model="item.pts"> </td>
                 </tr>
               </mdb-tbl-body>
@@ -101,7 +114,14 @@
               <mdb-tbl-body >
                 <tr v-for="(item, index) in dataInf" :key="index">
                   <td style="text-align: justify;"> {{item.name}} </td>
-                  <td> {{item.level}} </td>
+                  <td> 
+                    <select class="custom-select custom-select-sm" v-model="item.level">
+                      <option selected> {{item.level}} </option>
+                      <option value="Alto">Alto</option>
+                      <option value="Medio">Medio</option>
+                      <option value="Bajo / Nulo">Bajo / Nulo</option>
+                    </select>
+                  </td>
                   <td> <input class="form-control" style="text-align: center" type="number" v-model="item.pts"> </td>
                 </tr>
               </mdb-tbl-body>

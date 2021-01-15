@@ -120,7 +120,17 @@
             </mdb-col>
             <mdb-col>
               <select class="browser-default custom-select mt-4 mb-4" v-model="formSave.categoria">
-                <option selected>categoria</option>
+                <option selected disabled>categoría</option>
+                <option value="Gestión de impactos">Gestión de impactos</option>
+                <option value="Vinculación comunidades">Vinculación comunidades</option>
+              </select>
+            </mdb-col>
+          </mdb-row>
+
+          <mdb-row class="mb-4">
+            <mdb-col>
+              <select class="browser-default custom-select mt-4 mb-4" v-model="formSave.sub_categoria" v-if="formSave.categoria === 'Gestión de impactos' ">
+                <option selected disabled> subcategoría</option>
                 <option value="Comercio ambulante">Comercio ambulante</option>
                 <option value="Construcción">Construcción</option>
                 <option value="Otros (mantención acequias, cuerpos agua)">Otros (mantención acequias, cuerpos agua)</option>
@@ -134,12 +144,19 @@
                 <option value="Varios (solicitud por diversos temas)">Varios (solicitud por diversos temas)</option>
                 <option value="Visual">Visual</option>
               </select>
-            </mdb-col>
-          </mdb-row>
-
-          <mdb-row class="mb-4">
-            <mdb-col>
-              <mdb-input label="Sub Categoria"  type="text" class="mb-2" v-model="formSave.sub_categoria" />
+              <select class="browser-default custom-select mt-4 mb-4" v-model="formSave.sub_categoria" v-else-if="formSave.categoria === 'Vinculación comunidades' ">
+                <option selected disabled> subcategoría</option>
+                <option value="Apoyo a emprendedores">Apoyo a emprendedores</option>
+                <option value="Uso de espacios del centro comercial para actividades sociales">Uso de espacios del centro comercial para actividades sociales</option>
+                <option value="Campañas de alianza con autoridades)">Campañas de alianza con autoridades</option>
+                <option value="Empleabilidad local">Empleabilidad local</option>
+                <option value="Relacionamiento estratégico con organizaciones (ONGs, Bomberos o juntas de vecinos)">Relacionamiento estratégico con organizaciones (ONGs, Bomberos o juntas de vecinos)</option>
+                <option value="Residuos">Solicitud de donaciones</option>
+              </select>
+              <select class="browser-default custom-select mt-4 mb-4" v-model="formSave.sub_categoria" v-else>
+                <option selected disabled> subcategoría</option>
+                <option >Por favor seleccione una categoria</option>
+              </select>
             </mdb-col>
             <mdb-col>
               <mdb-input label="Via Recepcion de caso"  type="text" v-model="formSave.recepcion_caso"/>
@@ -174,6 +191,17 @@
             </mdb-col>
           </mdb-row>
 
+          <mdb-row class="mb-4">
+            <mdb-col>
+              <select class="browser-default custom-select mt-4 mb-4" v-model="formSave.status">
+                <option selected disabled>Estado</option>
+                <option value="Abierto">Abierto</option>
+                <option value="Pendientes">Pendientes</option>
+                <option value="Cerrado">Cerrado</option>
+              </select>
+            </mdb-col>
+          </mdb-row>
+
         </mdb-modal-body>
         <mdb-modal-footer center>
           <mdb-btn @click.native="editOne" v-if="editOneBool">Editar</mdb-btn>
@@ -190,6 +218,12 @@
         <datetime format="DD/MM/YYYY" width="100%" class="mb-5" v-model="formSave.fecha_cierre"></datetime>
         <mdb-input  type="file" v-model="formSave.medio_verificacion" class="mb-5"/>
         <mdb-textarea icon="pencil-alt" label="Comentarios" v-model="formSave.comentarios" />
+        <select class="browser-default custom-select mt-4 mb-4" v-model="formSave.status">
+          <option selected disabled>Estado</option>
+          <option value="Abierto">Abierto</option>
+          <option value="Pendientes">Pendientes</option>
+          <option value="Cerrado">Cerrado</option>
+        </select>
       </mdb-modal-body>
       <mdb-modal-footer center>
         <mdb-btn @click.native="closeCase = false" color="unique">Enviar <mdb-icon icon="paper-plane" class="ml-1"/></mdb-btn>
@@ -255,8 +289,8 @@ export default {
         nombre_caso: '',
         actor_principal: '',
         otros_actores: '',
-        categoria: 'categoria',
-        sub_categoria: '',
+        categoria: 'categoría',
+        sub_categoria: 'subcategoría',
         recepcion_caso: '',
         contacto: '',
         fecha_inicio: '',
@@ -264,7 +298,7 @@ export default {
         medidas_pq_arauco: '',
         medidas_otros_actores: '',
         pendientes: '',
-        status: '',
+        status: 'Estado',
         fecha_cierre: '',
         medio_verificacion: '',
         comentarios: ''
@@ -412,13 +446,13 @@ export default {
         if (items === -1) {
           this.formSave = {
             id: '',
-            pais: '',
-            activo: '',
+            pais: 'Pais',
+            activo: 'Activo',
             nombre_caso: '',
             actor_principal: '',
             otros_actores: '',
-            categoria: '',
-            sub_categoria: '',
+            categoria: 'categoría',
+            sub_categoria: 'subcategoría',
             recepcion_caso: '',
             contacto: '',
             fecha_inicio: '',
@@ -426,7 +460,7 @@ export default {
             medidas_pq_arauco: '',
             medidas_otros_actores: '',
             pendientes: '',
-            status: '',
+            status: 'Estado',
           }
           this.idForEdit = null
         }
@@ -441,19 +475,18 @@ export default {
         return `${count} user${plural} selected`
       },
       saveOne () {
-        this.formSave.status = "Abierto"
         this.formSave.id = this.data.rows.length + 1
         let objectForPush = this.formSave
         this.data.rows.push(objectForPush)
         this.formSave = {
           id: '',
-          pais: '',
-          activo: '',
+          pais: 'Pais',
+          activo: 'Activo',
           nombre_caso: '',
           actor_principal: '',
           otros_actores: '',
-          categoria: '',
-          sub_categoria: '',
+          categoria: 'categoría',
+          sub_categoria: 'subcategoría',
           recepcion_caso: '',
           contacto: '',
           fecha_inicio: '',
@@ -461,7 +494,7 @@ export default {
           medidas_pq_arauco: '',
           medidas_otros_actores: '',
           pendientes: '',
-          status: '',
+          status: 'Estado',
         }
         this.login = false
       },
@@ -481,13 +514,13 @@ export default {
         })
         this.formSave = {
           id: '',
-          pais: '',
-          activo: '',
+          pais: 'Pais',
+          activo: 'Activo',
           nombre_caso: '',
           actor_principal: '',
           otros_actores: '',
-          categoria: '',
-          sub_categoria: '',
+          categoria: 'categoría',
+          sub_categoria: 'subcategoría',
           recepcion_caso: '',
           contacto: '',
           fecha_inicio: '',
@@ -495,7 +528,7 @@ export default {
           medidas_pq_arauco: '',
           medidas_otros_actores: '',
           pendientes: '',
-          status: '',
+          status: 'Estado',
         }
         this.login = false
         this.editOneBool = false
@@ -511,21 +544,18 @@ export default {
       sendOne () {
         this.data.rows.map(element => {
           if(element.id === this.idForEdit) {
-            element.status = 'cerrado'
-            this.formSave.status = 'cerrado'
-            element = this.formSave
-            
+            element = this.formSave  
           }
         })
         this.formSave = {
           id: '',
-          pais: '',
-          activo: '',
+          pais: 'Pais',
+          activo: 'Activo',
           nombre_caso: '',
           actor_principal: '',
           otros_actores: '',
-          categoria: '',
-          sub_categoria: '',
+          categoria: 'categoría',
+          sub_categoria: 'subcategoría',
           recepcion_caso: '',
           contacto: '',
           fecha_inicio: '',
@@ -533,7 +563,7 @@ export default {
           medidas_pq_arauco: '',
           medidas_otros_actores: '',
           pendientes: '',
-          status: '',
+          status: 'Estado',
           fecha_cierre: '',
           medio_verificacion: '',
           comentarios: ''
